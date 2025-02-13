@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine for Dear</title>
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: #fdf5e6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            position: relative;
+            width: 400px;
+            background: #fff9f5;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #fcd5c3;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Handlee', cursive;
+            font-size: 28px;
+            margin: 0;
+            color: #e97f7f;
+            letter-spacing: 2px;
+        }
+        .bow {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 70px;
+        }
+        .clip-container {
+            width: 100%;
+            margin: 15px 0;
+        }
+        .clip-container video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .image-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 10px;
+            border: 2px solid #f4a1a1;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .description {
+            font-size: 30px;
+            font-weight: 600;
+            color: #e97f7f;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeLoop 4s infinite ease-in-out;
+        }
+        @keyframes fadeLoop {
+            0% { opacity: 0; transform: translateY(10px); }
+            50% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .game-button, .next-button, #play-music {
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s;
+            padding: 12px 25px;
+            border-radius: 50px;
+            background: #e97f7f;
+            border: 2px solid #e97f7f;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .game-button:hover, .next-button:hover, #play-music:hover {
+            background: #f4a1a1;
+            border: 2px solid #f4a1a1;
+        }
+        .next-button {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="bow2.png" alt="Bow" class="bow">
+        <h1>VALENTINE <br> FOR DEAR</h1>
+        <div class="clip-container">
+            <video autoplay loop muted playsinline>
+                <source src="love2.mov" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <audio id="bg-music" loop>
+                <source src="Billie Eilish.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+        <div class="image-text-container">
+            <div class="image-container">
+                <img src="mylove1.jpg" alt="Gift">
+            </div>
+            <p class="description">A special gift <br> for her</p>
+        </div>
+        <button id="play-music">Play Music</button>
+        <div class="button-container">
+            <button class="game-button" onclick="goToGame('matching-game.html')">🎮 เกมจับคู่ภาพ</button>
+        </div>
+    </div>
+    <button class="next-button" onclick="goToNextPage()">Next</button>
+    
+    <script>
+        function goToNextPage() {
+            window.location.href = "index2.html";
+        }
+
+        function goToGame(gamePage) {
+            window.location.href = gamePage;
+        }
+
+        document.getElementById("play-music").addEventListener("click", function() {
+            const music = document.getElementById("bg-music");
+            if (music.paused) {
+                music.play().catch(error => console.log("Autoplay failed:", error));
+                this.textContent = "Pause Music";
+            } else {
+                music.pause();
+                this.textContent = "Play Music";
+            }
+        });
+    </script>
+</body>
+</html>

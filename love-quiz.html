@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมตอบคำถามความรัก 💕</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        h1 {
+            color: #ff66b2;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .question-container {
+            background-color: #ff99cc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .answer-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .answer-buttons button {
+            background-color: #ff66b2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 200px;
+        }
+        .answer-buttons button:hover {
+            background-color: #ff3385;
+        }
+        .result-container {
+            display: none;
+            text-align: center;
+            background-color: #ff66b2;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            width: 80%;
+        }
+        .next-button {
+            background-color: #ff66b2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .next-button:hover {
+            background-color: #ff3385;
+        }
+        /* หิมะตก */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background-color: white;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>💖 เกมตอบคำถามความรัก 💖</h1>
+
+    <div class="question-container" id="questionContainer">
+        <h2 id="questionText">คำถาม 1: เราคบกันมากี่ปีเเล้วกี่เดือนเเล้ว?</h2>
+        <div class="answer-buttons">
+            <button onclick="checkAnswer('a')">A. 2 ปี 6 เดือน</button>
+            <button onclick="checkAnswer('b')">B. 2 ปี 7 เดือน</button>
+            <button onclick="checkAnswer('c')">C. 2 ปี 5 เดือน</button>
+        </div>
+    </div>
+
+    <div class="result-container" id="resultContainer">
+        <h2 id="resultMessage"></h2>
+        <button class="next-button" onclick="nextQuestion()">ไปยังคำถามถัดไป</button>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        let correctAnswers = {
+            1: 'a', // คำตอบที่ถูกต้องของข้อ 1
+            2: 'c', // คำตอบที่ถูกต้องของข้อ 2
+            3: 'a'  // คำตอบที่ถูกต้องของข้อ 3
+        };
+
+        function checkAnswer(answer) {
+            let correctAnswer = correctAnswers[currentQuestion];
+
+            if (answer === correctAnswer) {
+                document.getElementById("resultMessage").textContent = "🎉 ถูกต้อง! 🎉";
+            } else {
+                document.getElementById("resultMessage").textContent = `❌ ผิด! คำตอบที่ถูกต้องคือ "${getCorrectText(currentQuestion)}"`;
+            }
+            document.getElementById("resultContainer").style.display = "block";
+            document.getElementById("questionContainer").style.display = "none";
+        }
+
+        function getCorrectText(questionNum) {
+            let answerText = {
+                1: "A. 2 ปี 6 เดือน เเค่นี้ยังผิด สภาพเนาะ",
+                2: "C. ก๋วยเตี๋ยว เนาะอย่างมั่ว จำไว้ด้วย",
+                3: "A. ไม่ว่าจะบวกหรือลบ ก็ไม่เท่า ความรักของเรา"
+            };
+            return answerText[questionNum];
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion <= 3) {
+                updateQuestion();
+            } else {
+                showFinalMessage();
+            }
+        }
+
+        function updateQuestion() {
+            document.getElementById("questionContainer").style.display = "block";
+            document.getElementById("resultContainer").style.display = "none";
+
+            let questionText = {
+                2: "เค้าชอบกินอะไรที่สุด?",
+                3: "20 + 41 + 199 + 890= ?"
+            };
+
+            let answerOptions = {
+                2: ["A. ผัดกะเพราหมูกรอบ", "B. ข้าวมันไก่", "C.ก๋วยเตี๋ยว"],
+                3: ["A. ความรักของเรา", "B. 1297", "C. 1150"]
+            };
+
+            document.getElementById("questionText").textContent = questionText[currentQuestion];
+            let buttons = document.querySelectorAll(".answer-buttons button");
+            buttons.forEach((btn, index) => {
+                btn.textContent = answerOptions[currentQuestion][index];
+            });
+        }
+
+        function showFinalMessage() {
+            document.getElementById("resultMessage").innerHTML = "🎊 จบเกมแล้ว! ขอบคุณที่เล่น 🎊";
+            document.querySelector(".next-button").textContent = "ไปหน้าถัดไป";
+            document.querySelector(".next-button").setAttribute("onclick", "goToNextPage()");
+        }
+
+        function goToNextPage() {
+            window.location.href = "index3.html"; // แก้เป็นหน้าที่ต้องการไป
+        }
+
+        // สร้างหิมะตก
+        function createSnowflakes() {
+            for (let i = 0; i < 50; i++) {
+                let snowflake = document.createElement("div");
+                snowflake.classList.add("snowflake");
+                snowflake.style.left = Math.random() * window.innerWidth + "px";
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + "s"; 
+                snowflake.style.animationDelay = Math.random() * 5 + "s"; 
+                document.body.appendChild(snowflake);
+            }
+        }
+        createSnowflakes();
+    </script>
+
+</body>
+</html>

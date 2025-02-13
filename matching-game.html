@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffe6e6;
+        }
+        h1 {
+            color: #ff6699;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 80px);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .card {
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            border: 2px solid #ff6699;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .hidden {
+            background-color: #ff99bb;
+        }
+        .message-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .message-container video {
+            width: 300px;
+            border-radius: 10px;
+        }
+        .next-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff6699;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .next-button:hover {
+            background-color: #ff3385;
+        }
+    </style>
+</head>
+<body>
+    <h1>💕 Matching Game 💕</h1>
+    <div class="game-board" id="gameBoard"></div>
+    <div class="message-container" id="messageContainer">
+        <!-- วิดีโอที่เล่นวนซ้ำ -->
+        <video controls loop>
+            <source src="IMG_8173.mp4" type="video/mp4">
+        </video>
+        <h2>🎉 You matched all pairs! 🎉</h2>
+        <!-- ปุ่มไปหน้าถัดไป -->
+        <button class="next-button" onclick="goToNextPage()">Go to Next Page</button>
+    </div>
+    
+    <script>
+        const emojis = ['🐶', '🐶', '🐱', '🐱', '🐰', '🐰', '🐻', '🐻', '🦊', '🦊', '🐼', '🐼', '🐨', '🐨', '🐯', '🐯'];
+        let shuffledEmojis = emojis.sort(() => 0.5 - Math.random());
+        let selectedCards = [];
+        let matchedPairs = 0;
+        const gameBoard = document.getElementById("gameBoard");
+
+        shuffledEmojis.forEach((emoji, index) => {
+            let card = document.createElement("div");
+            card.classList.add("card", "hidden");
+            card.dataset.index = index;
+            card.textContent = "❓";
+            card.addEventListener("click", flipCard);
+            gameBoard.appendChild(card);
+        });
+
+        function flipCard() {
+            if (selectedCards.length < 2 && this.classList.contains("hidden")) {
+                let index = this.dataset.index;
+                this.textContent = shuffledEmojis[index];
+                this.classList.remove("hidden");
+                selectedCards.push(this);
+
+                if (selectedCards.length === 2) {
+                    setTimeout(checkMatch, 500);
+                }
+            }
+        }
+
+        function checkMatch() {
+            if (selectedCards[0].textContent === selectedCards[1].textContent) {
+                selectedCards.forEach(card => card.style.backgroundColor = "#ccffcc");
+                matchedPairs++;
+                if (matchedPairs === emojis.length / 2) {
+                    document.getElementById("messageContainer").style.display = "flex";
+                }
+            } else {
+                selectedCards.forEach(card => {
+                    card.textContent = "❓";
+                    card.classList.add("hidden");
+                });
+            }
+            selectedCards = [];
+        }
+
+        // ฟังก์ชันไปหน้าถัดไป
+        function goToNextPage() {
+            // เปลี่ยน URL ตามที่ต้องการไปยังหน้าถัดไป
+            window.location.href = "surprise-game.html";  // เปลี่ยน URL ให้เป็นหน้าถัดไปที่คุณต้องการ
+        }
+    </script>
+</body>
+</html>

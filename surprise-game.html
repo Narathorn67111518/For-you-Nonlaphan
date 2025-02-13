@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Game 💖</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #ff66b2;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .surprise-box {
+            width: 100px;
+            height: 100px;
+            background-color: #ff99cc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .surprise-box:hover {
+            background-color: #ff66b2;
+        }
+        .message-container {
+            display: none;
+            text-align: center;
+            background-color: #ff66b2;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            margin-top: 20px;
+        }
+        .message-container img {
+            width: 200px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .button-next {
+            background-color: #ff66b2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .button-next:hover {
+            background-color: #ff3385;
+        }
+    </style>
+</head>
+<body>
+    <h1>💖 Surprise Game 💖</h1>
+    <div class="game-container">
+        <div class="surprise-box" onclick="revealSurprise(this)">🎁</div>
+        <div class="surprise-box" onclick="revealSurprise(this)">🎁</div>
+        <div class="surprise-box" onclick="revealSurprise(this)">🎁</div>
+        <div class="surprise-box" onclick="revealSurprise(this)">🎁</div>
+        <div class="surprise-box" onclick="revealSurprise(this)">🎁</div>
+        <div class="surprise-box" onclick="revealSurprise(this)">🎁</div>
+    </div>
+    
+    <div class="message-container" id="messageContainer">
+        <img src="D:\New My luv\เพลง + รูป\IMG_2107.JPG" alt="Surprise!">
+        <h2>🎉 Surprise! You found it! 🎉</h2>
+        <button class="button-next" onclick="goToNextPage()">Go to Next Page</button>
+    </div>
+
+    <script>
+        function revealSurprise(box) {
+            box.style.backgroundColor = "#cc66ff";
+            box.innerHTML = "💖";
+            box.style.pointerEvents = "none";
+            showMessage();
+        }
+
+        function showMessage() {
+            document.getElementById("messageContainer").style.display = "block";
+        }
+
+        function goToNextPage() {
+            window.location.href = "love-quiz.html"; // เปลี่ยน URL เป็นหน้าถัดไปที่ต้องการ
+        }
+    </script>
+</body>
+</html>
