@@ -31,7 +31,6 @@
             pointer-events: none;
             animation: snowfall 10s linear infinite;
         }
-
         @keyframes snowfall {
             0% {
                 transform: translateX(0) translateY(-100px);
@@ -40,10 +39,16 @@
                 transform: translateX(50px) translateY(100vh);
             }
         }
-
+        .polaroid-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
         .polaroid {
-            position: absolute;
-            width: 120px;
+            width: 100px;
+            height: 120px;
             padding: 10px;
             background: white;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
@@ -119,6 +124,7 @@
     <div class="hidden-content" id="surprise-content">
         <h2>Surprise! 💖</h2>
         <p>You're the best thing that ever happened to me! 🥰</p>
+        <div class="polaroid-container" id="polaroid-container"></div>
         <button class="next-page" onclick="goToNextPage()">Next ➜</button>
     </div>
 
@@ -148,17 +154,16 @@
         
         function showPolaroids() {
             const images = [
-                "D:1.JPG", "2.jpg", "3.JPG", "4.jpg", "5.jpg",
+                "1.JPG", "2.jpg", "3.JPG", "4.jpg", "5.jpg",
                 "6.jpg", "7.jpg", "8.jpg", "9.jpg", "10.jpg"
             ];
+            const container = document.getElementById("polaroid-container");
             images.forEach((src, index) => {
                 setTimeout(() => {
                     let polaroid = document.createElement("img");
                     polaroid.src = src;
                     polaroid.classList.add("polaroid");
-                    polaroid.style.top = Math.random() * 50 + 20 + "%";
-                    polaroid.style.left = Math.random() * 70 + 15 + "%";
-                    document.body.appendChild(polaroid);
+                    container.appendChild(polaroid);
                     setTimeout(() => {
                         polaroid.style.opacity = "1";
                         polaroid.style.transform = "scale(1) rotate(0deg)";
@@ -166,28 +171,6 @@
                 }, index * 500);
             });
         }
-
-        // ฟังก์ชันสำหรับสร้างหิมะ
-        function createSnowflakes() {
-            const snowflakeCount = 50; // จำนวนหิมะ
-            const snowflakesContainer = document.body;
-            
-            for (let i = 0; i < snowflakeCount; i++) {
-                let snowflake = document.createElement('div');
-                snowflake.classList.add('snowflake');
-                snowflake.textContent = '❄'; // ใช้สัญลักษณ์หิมะ
-                
-                // ตั้งค่าตำแหน่งเริ่มต้นของหิมะ
-                snowflake.style.left = `${Math.random() * 100}vw`; // กำหนดตำแหน่งในแนวนอนแบบสุ่ม
-                snowflake.style.animationDuration = `${Math.random() * 3 + 5}s`; // ความเร็วตกของหิมะ
-
-                snowflakesContainer.appendChild(snowflake);
-            }
-        }
-
-        // เรียกใช้งานฟังก์ชันเมื่อหน้าเว็บโหลด
-        window.onload = createSnowflakes;
-
         function goToNextPage() {
             window.location.href = "index2.html";
         }
